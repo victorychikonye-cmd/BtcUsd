@@ -3,40 +3,51 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>BTCUSD Sniper Analysis Engine</title>
+<meta name="theme-color" content="#12171e">
+<title>BTCUSD Sniper</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <main>
-<h1>BTCUSD Sniper Analysis Engine</h1>
-<p class="sub">Multi-timeframe analysis: M15 context, M5 setup, M1 entry check. Everything runs in your browser. Fetch live data or paste your own.</p>
-<div class="safe">Educational analysis and paper trading only. This page places no orders and connects to no broker. It never invents candles: if data is missing, it says so.</div>
+<header class="top"><h1>BTCUSD Sniper</h1><span class="sub">M15 context · M5 setup · M1 confirmation</span></header>
 
-<div class="feed"><label for="m15">M15 candles (Twelve Data or Binance)</label>
-<small>Twelve Data: <code>time_series?symbol=BTC/USD&amp;interval=15min&amp;outputsize=200&amp;apikey=…</code>. Or Binance klines below with interval=15m.</small>
-<textarea id="m15" placeholder="Paste JSON here"></textarea></div>
+<section id="sig" class="sigcard w" aria-live="polite">
+  <div class="sigtop"><span id="sigdir">WAIT</span><span id="sigpx"></span></div>
+  <p id="sigtxt">Loading live data…</p>
+  <div id="sigmeta" class="meta"></div>
+</section>
 
-<div class="feed"><label for="m5">M5 candles (Binance klines, 5m)</label>
-<small><a href="https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=5m&limit=1000" target="_blank" rel="noopener">Open Binance 5m klines</a> and paste the result. A longer history (limit=1000) also feeds the backtest.</small>
-<textarea id="m5" placeholder="Paste JSON here"></textarea></div>
-
-<div class="feed"><label for="m1">M1 candles (Binance klines, 1m)</label>
-<small><a href="https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1m&limit=60" target="_blank" rel="noopener">Open Binance 1m klines</a> and paste the result.</small>
-<textarea id="m1" placeholder="Paste JSON here"></textarea></div>
-
-<div class="feed"><label for="bk">Bid and ask (Binance book ticker)</label>
-<small><a href="https://api.binance.com/api/v3/ticker/bookTicker?symbol=BTCUSDT" target="_blank" rel="noopener">Open Binance book ticker</a> and paste the result. Needed to account for spread.</small>
-<textarea id="bk" style="height:52px" placeholder="Paste JSON here"></textarea></div>
-
-<div class="feed"><label for="tdkey">Live fetch (optional)</label>
-<small>Pulls Binance M5 (1000 closed candles), M1, and the book ticker straight from your browser. Add a Twelve Data key for M15, or leave it empty to use Binance 15m. The key is used for this request only and is never stored. If your region blocks Binance, paste the data manually instead.</small>
-<input id="tdkey" type="password" autocomplete="off" placeholder="Twelve Data API key (optional)" style="width:100%;margin-bottom:8px;padding:8px;font:14px system-ui,sans-serif;background:var(--bg);color:var(--ink);border:1px solid var(--line)">
-<button id="live" type="button">Fetch live data and analyse</button><span id="fst" class="tag"></span></div>
-
-<button id="go">Run analysis</button><button class="alt" id="clr">Clear</button>
+<div class="ctl">
+  <button id="live" type="button">Refresh now</button>
+  <button id="auto" type="button" class="alt">Auto-refresh: off</button>
+  <button id="notif" type="button" class="alt">Alerts: off</button>
+</div>
+<p id="fst" class="tag" role="status"></p>
 <div id="err" role="alert"></div>
-<div id="out" aria-live="polite"></div>
+
+<canvas id="chart" height="260" aria-label="M5 candlestick chart with M15 levels"></canvas>
+
+<h2>Paper signal log</h2>
+<div id="logsum" class="tag"></div>
+<div class="tbl" id="logtbl"></div>
+
+<div class="safe">Educational analysis and paper trading only. No orders are placed. A “signal” is a paper candidate from fixed rules with no proven edge. It is not advice.</div>
+
+<details><summary>Full 9-point report and backtest</summary><div id="out"></div></details>
+
+<details><summary>Data sources and manual input</summary>
+<div class="feed"><label for="tdkey">Twelve Data key (optional, for M15)</label>
+<small>Used for the request only, never stored. Without it, Binance 15m is used for M15.</small>
+<input id="tdkey" type="password" autocomplete="off" placeholder="Twelve Data API key"></div>
+<p class="tag">Blocked by your region or network? Paste data instead, then press Analyse pasted data.</p>
+<div class="feed"><label for="m15">M15 candles</label><textarea id="m15" placeholder="Twelve Data or Binance JSON"></textarea></div>
+<div class="feed"><label for="m5">M5 candles (Binance klines)</label><textarea id="m5" placeholder="Binance klines JSON"></textarea></div>
+<div class="feed"><label for="m1">M1 candles (Binance klines)</label><textarea id="m1" placeholder="Binance klines JSON"></textarea></div>
+<div class="feed"><label for="bk">Bid and ask (Binance bookTicker)</label><textarea id="bk" style="height:52px" placeholder="bookTicker JSON"></textarea></div>
+<button id="go" type="button">Analyse pasted data</button><button class="alt" id="clr" type="button">Clear</button>
+</details>
 </main>
 <script src="js/app.js"></script>
+<script src="js/dash.js"></script>
 </body>
 </html>

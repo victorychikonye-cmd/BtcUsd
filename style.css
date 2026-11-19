@@ -30,3 +30,20 @@ table{border-collapse:collapse;width:100%;font:.85rem system-ui,sans-serif}
 th,td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:right;white-space:nowrap}
 th:first-child,td:first-child{text-align:left}
 .up{color:var(--up)}.dn{color:var(--dn)}
+.top{display:flex;flex-direction:column;gap:2px;margin-bottom:12px}
+.top h1{margin:0;font-size:1.5rem}
+.sigcard{border:2px solid var(--wait);background:var(--panel);padding:16px;margin:8px 0}
+.sigcard.up{border-color:var(--up)}.sigcard.dn{border-color:var(--dn)}
+.sigtop{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-family:system-ui,sans-serif}
+#sigdir{font-size:2.4rem;font-weight:800;letter-spacing:.02em;color:var(--wait)}
+.up #sigdir{color:var(--up)}.dn #sigdir{color:var(--dn)}
+#sigpx{font-size:1.15rem;font-weight:600}
+#sigtxt{margin:6px 0}
+.meta{display:flex;flex-wrap:wrap;gap:6px 18px;font:.85rem system-ui,sans-serif;color:var(--mute)}
+.meta b{color:var(--ink)}
+.ctl{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.ctl button{margin:0}
+#chart{width:100%;height:260px;background:var(--panel);border:1px solid var(--line);margin:8px 0}
+details{border-top:1px solid var(--line);padding:10px 0}
+summary{cursor:pointer;font-weight:700}
+input{font-family:inherit}

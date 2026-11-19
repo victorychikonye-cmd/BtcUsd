@@ -179,7 +179,8 @@ function render(m15,m5,m1,spread,bid,ask){
     h+=S('Historical performance (simulated)',bh);
   }else h+=S('9. Confidence assessment','<p><b>Not assessable.</b> A backtest needs at least 100 M5 candles. No accuracy percentage is claimed.</p>');
   $('out').innerHTML=h;
-  $('out').scrollIntoView({behavior:'smooth'});
+  window.LAST={vc,vt,why,dir:d5&&d5.dir,stop,px,spread,bid,ask,sup,res,trend,m5,at:d5?m5[d5.at].t:null,a5};
+  document.dispatchEvent(new Event('analysed'));
 }
 $('go').onclick=run;
 $('clr').onclick=()=>{['m15','m5','m1','bk'].forEach(i=>$(i).value='');$('out').innerHTML='';$('err').textContent=''};
